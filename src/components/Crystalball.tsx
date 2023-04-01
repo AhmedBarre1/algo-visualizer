@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import "../global.css";
 const Crystalball = () => {
-  const [breaks, setBreaks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+  const [breaks, setBreaks] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1,
+  ]);
   const breaksRef = useRef([]);
   const [divbreaks, setDivbreaks] = useState<any>([]);
 
@@ -55,16 +58,16 @@ const Crystalball = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       Crystalball
       <button
         onClick={() => crystalball()}
-        className="bg-green-500 my-2 w-20 h-10 "
+        className="bg-green-600 my-2 w-20 h-10 "
       >
         {" "}
         start{" "}
       </button>
-      <div ref={breaksRef} className="flex">
+      <div ref={breaksRef} className="flex flex-wrap">
         {breaks.map((i) => {
           return (
             <p className="bg-[gray] border-[1px] border-gray-400 h-12 w-20">

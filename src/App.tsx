@@ -1,9 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
 import { useState } from "react";
-import styles from "../styles/Home.module.css";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
-export default function Home() {
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+
+import Crystalball from "./components/Crystalball";
+function App() {
   const [breaks, setBreaks] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 3,
   ]);
@@ -19,51 +22,6 @@ export default function Home() {
 
       document.body.querySelector(".bars").appendChild(div);
     });
-  };
-
-  const crystalball = async () => {
-    if (typeof window !== "undefined") {
-      const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
-      let divbreaks = document.body.querySelectorAll(".bar");
-
-      let jumpamount = Math.floor(Math.sqrt(breaks.length));
-      console.log("br", divbreaks);
-      let i = jumpamount;
-      for (; i < breaks.length; i += jumpamount) {
-        divbreaks[i].style.backgroundColor = "orange";
-        if (divbreaks[i].innerHTML == 1) {
-          divbreaks[i].style.backgroundColor = "lightgreen";
-          await sleep(500);
-          break;
-        } else {
-          await sleep(500);
-          divbreaks[i].style.backgroundColor = "gray";
-          console.log(i);
-        }
-      }
-
-      i -= jumpamount;
-
-      for (let j = 0; j < jumpamount && i < divbreaks.length; ++j, ++i) {
-        divbreaks[i].style.backgroundColor = "dodgerblue";
-        sleep(50);
-      }
-
-      i -= jumpamount;
-
-      for (let j = 0; j < jumpamount && i < divbreaks.length; ++j, ++i) {
-        if (divbreaks[i].innerHTML == 1) {
-          divbreaks[i].style.backgroundColor = "lightgreen";
-          await sleep(500);
-          break;
-        }
-        divbreaks[i].style.backgroundColor = "red";
-
-        await sleep(500);
-
-        divbreaks[i].style.backgroundColor = "gray";
-      }
-    }
   };
 
   const binary_search = async (target = 3) => {
@@ -125,36 +83,28 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gray-800 w-screen h-screen flex items-center flex-col ">
-      <div className="w-10/12 mt-10">
-        <div className=" w-10/12">
-          <button
-            onClick={async () => {
-              addBars();
+    <div className=" h-screen text-white w-screen flex justify-center bg-gray-800">
+      <div className="w-10/12 mt-5 flex flex-col">
+        <Router>
+          <div className="flex flex-col">
+            <nav>
+              <Link to="/">
+                <button className="bg-green-400 rounded-lg p-2 w-[10rem]">
+                  Chat
+                </button>
+              </Link>
+            </nav>
 
-              binary_search(3);
-            }}
-            className="bg-green-500 p-2 w-48 rounded-lg mr-2"
-          >
-            {" "}
-            Binary{" "}
-          </button>
-
-          <button
-            onClick={async () => {
-              addBars();
-              crystalball();
-            }}
-            className="bg-red-500 p-2 w-48 rounded-lg mr-2"
-          >
-            crystalball{" "}
-          </button>
-          <button className="bg-orange-500 p-2 w-48 rounded-lg mr-2">
-            Linear search{" "}
-          </button>
-        </div>
-        <div className="bg-gray-700 overflow-scroll mt-2 flex bars">hello</div>
+            {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+            <Routes>
+              <Route path="/" element={<Crystalball />} />
+            </Routes>
+          </div>
+        </Router>
       </div>
     </div>
   );
 }
+
+export default App;
