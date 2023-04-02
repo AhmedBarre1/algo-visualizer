@@ -1,16 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../global.css";
 const Crystalball = () => {
-  const [breaks, setBreaks] = useState([
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1,
-  ]);
+  const [breaks, setBreaks] = useState([]);
   const breaksRef = useRef([]);
   const [divbreaks, setDivbreaks] = useState<any>([]);
 
   useEffect(() => {
     setDivbreaks(breaksRef.current.querySelectorAll("p"));
-  }, [breaksRef.current]);
+  }, [breaks]);
 
   const crystalball = async () => {
     if (typeof window !== "undefined") {
@@ -20,7 +17,7 @@ const Crystalball = () => {
 
       let i = jumpamount;
       for (; i < breaks.length; i += jumpamount) {
-        console.log("look", divbreaks[0]);
+        console.log("look", divbreaks);
         divbreaks[i].style.backgroundColor = "orange";
         if (divbreaks[i].textContent == 1) {
           divbreaks[i].style.backgroundColor = "lightgreen";
@@ -59,18 +56,25 @@ const Crystalball = () => {
 
   return (
     <div className="flex flex-col w-full">
-      Crystalball
       <button
         onClick={() => crystalball()}
-        className="bg-green-600 my-2 w-20 h-10 "
+        className="bg-purple-400 rounded-lg p-2 my-5 w-[20rem]"
       >
-        {" "}
-        start{" "}
+        start crystalball algo
       </button>
+      <input
+        onChange={(e) => {
+          setBreaks([...breaks, e.target.value]);
+          e.target.value = [];
+        }}
+        className="outline-none p-2 mb-4 rounded-lg bg-gray-600"
+        placeholder="add array"
+      />
+      <button onClick={() => setBreaks([])}> clear search array </button>
       <div ref={breaksRef} className="flex flex-wrap">
         {breaks.map((i) => {
           return (
-            <p className="bg-[gray] border-[1px] border-gray-400 h-12 w-20">
+            <p className="bg-gray-700 border-[1px] border-gray-600 p-2 rounded-md h-12 w-20">
               {" "}
               {i}{" "}
             </p>
